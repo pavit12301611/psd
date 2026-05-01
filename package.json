@@ -1,13 +1,11 @@
 {
   "name": "pavit-portfolio",
   "version": "1.0.0",
-  "description": "Pavit Singh Portfolio",
   "scripts": {
-    "dev": "netlify dev",
-    "build": "echo 'Static site - no build needed'"
+    "build": "mkdir -p .empty_dist"
   },
   "dependencies": {
-    "mongodb": "^6.21.0",
-    "nodemailer": "^6.10.1"
+    "mongodb": "^6.3.0",
+    "nodemailer": "^6.9.8"
   }
 }
