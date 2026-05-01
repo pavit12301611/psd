@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <meta name="description" content="Pavit Singh — The Legendary 14-Year-Old Developer from India">
+    <meta name="theme-color" content="#1a1a2e">
+    <title>PAVIT SINGH | The Legendary Developer 🚀</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Syncopate:wght@400;700&family=Fira+Code:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚀</text></svg>">
+</head>
+<!-- Add this to your index.html right before </body> -->
+<script src="db.js"></script>
+<body data-theme="retro">
+
+    <!-- PRELOADER -->
+    <div id="preloader">
+        <div class="preloader-inner">
+            <div class="preloader-orbit-container">
+                <div class="preloader-center-icon">👨‍💻</div>
+                <span class="orbit-emoji" style="--i:0">🐍</span>
+                <span class="orbit-emoji" style="--i:1">⚡</span>
+                <span class="orbit-emoji" style="--i:2">🎮</span>
+                <span class="orbit-emoji" style="--i:3">🚀</span>
+                <span class="orbit-emoji" style="--i:4">💻</span>
+                <span class="orbit-emoji" style="--i:5">🧠</span>
+                <span class="orbit-emoji" style="--i:6">☕</span>
+                <span class="orbit-emoji" style="--i:7">🔥</span>
+            </div>
+            <div class="preloader-text">INITIALIZING LEGENDARY MODE</div>
+            <div class="preloader-bar-wrap">
+                <div class="preloader-bar" id="preloaderBar"></div>
+            </div>
+            <div class="preloader-percent" id="preloaderPercent">0%</div>
+            <div class="preloader-joke" id="preloaderJoke">Compiling awesomeness...</div>
+        </div>
+    </div>
+
+    <!-- CUSTOM CURSOR -->
+    <div class="cursor-dot" id="cursorDot"></div>
+    <div class="cursor-outline" id="cursorOutline"></div>
+    <div class="cursor-glow" id="cursorGlow"></div>
+
+    <!-- CANVASES -->
+    <canvas id="canvas3d"></canvas>
+    <canvas id="matrixCanvas"></canvas>
+    <canvas id="waveCanvas"></canvas>
+
+    <!-- FLOATING PARTICLES -->
+    <div id="floatingParticles"></div>
+
+    <!-- NAVBAR -->
+    <nav class="navbar" id="navbar">
+        <a href="#" class="nav-logo">
+            <span class="logo-bracket">&lt;</span>PAVIT<span class="logo-dot">.</span>DEV<span class="logo-bracket">/&gt;</span>
+        </a>
+
+        <ul class="nav-links" id="navLinks">
+            <li><a href="#hero" class="nav-link" onclick="closeNav()">Home</a></li>
+            <li><a href="#about" class="nav-link" onclick="closeNav()">About</a></li>
+            <li><a href="#skills" class="nav-link" onclick="closeNav()">Skills</a></li>
+            <li><a href="#projects" class="nav-link" onclick="closeNav()">Projects</a></li>
+            <li><a href="#store" class="nav-link" onclick="closeNav()">Vault</a></li>
+            <li><a href="#funzone" class="nav-link" onclick="closeNav()">Fun Zone</a></li>
+            <li><a href="#contact" class="nav-link" onclick="closeNav()">Contact</a></li>
+        </ul>
+
+        <div class="nav-controls">
+            <button class="nav-btn" id="themeBtn" onclick="cycleTheme()">
+                <span class="btn-icon">🕹️</span>
+                <span class="btn-text">Retro</span>
+            </button>
+            <button class="nav-btn" id="partyBtn" onclick="toggleParty()">
+                <span class="btn-icon">🎉</span>
+                <span class="btn-text">Party</span>
+            </button>
+            <button class="nav-btn" onclick="openSnakeGame()">
+                <span class="btn-icon">🐍</span>
+                <span class="btn-text">Snake</span>
+            </button>
+        </div>
+
+        <div class="hamburger" id="hamburger" onclick="toggleNav()">
+            <span></span><span></span><span></span>
+        </div>
+    </nav>
+
+    <!-- MOBILE NAV -->
+    <div class="mobile-nav-overlay" id="mobileNavOverlay">
+        <div class="mobile-nav-content">
+            <a href="#hero" class="mobile-nav-link" onclick="closeNav()">Home</a>
+            <a href="#about" class="mobile-nav-link" onclick="closeNav()">About</a>
+            <a href="#skills" class="mobile-nav-link" onclick="closeNav()">Skills</a>
+            <a href="#projects" class="mobile-nav-link" onclick="closeNav()">Projects</a>
+            <a href="#store" class="mobile-nav-link" onclick="closeNav()">Vault</a>
+            <a href="#funzone" class="mobile-nav-link" onclick="closeNav()">Fun Zone</a>
+            <a href="#contact" class="mobile-nav-link" onclick="closeNav()">Contact</a>
+            <div class="mobile-nav-controls">
+                <button class="nav-btn" onclick="cycleTheme()">🕹️ Theme</button>
+                <button class="nav-btn" onclick="toggleParty()">🎉 Party</button>
+                <button class="nav-btn" onclick="openSnakeGame(); closeNav();">🐍 Snake</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- XP -->
+    <div class="xp-widget" id="xpWidget">
+        <div class="xp-level" id="xpLevel">LVL 1</div>
+        <div class="xp-bar-outer"><div class="xp-bar-inner" id="xpBar"></div></div>
+        <div class="xp-text" id="xpText">0 XP</div>
+    </div>
+
+    <!-- ACHIEVEMENT -->
+    <div class="achievement-popup" id="achievementPopup">
+        <div class="ach-glow"></div>
+        <span class="ach-icon" id="achIcon">🏆</span>
+        <div class="ach-content">
+            <h4>ACHIEVEMENT UNLOCKED</h4>
+            <p id="achText">Welcome!</p>
+        </div>
+    </div>
+
+    <!-- ========== MAIN ========== -->
+    <main id="content">
+
+        <!-- HERO -->
+        <section class="hero" id="hero">
+            <div class="container hero-container">
+                <div class="hero-left">
+                    <div class="hero-badge"><span class="badge-dot"></span>AVAILABLE FOR WORK</div>
+                    <span class="eyebrow">ESTABLISHED 2010 // AGE 14 // INDIA 🇮🇳</span>
+                    <h1 class="hero-title">
+                        <span class="title-line title-line-1">
+                            <span class="char-wrap glitch-text" data-text="PAVIT">PAVIT</span>
+                        </span>
+                        <span class="title-line title-line-2">
+                            <span class="char-wrap outline-text">SINGH</span>
+                        </span>
+                    </h1>
+                    <div class="typing-container">
+                        <span class="typing-prefix">~/pavit $</span>
+                        <span id="typingText"></span>
+                        <span class="typing-cursor">|</span>
+                    </div>
+                    <p class="hero-description">Architecting digital realities through Python, C++, and the Modern Web. A developer so good, even bugs fear him! 🐛💀</p>
+                    <div class="hero-btns">
+                        <button class="btn-primary magnetic" onclick="scrollToSection('#projects'); addXP(10);">
+                            <span>VIEW PROJECTS</span>
+                            <div class="btn-shine"></div>
+                        </button>
+                        <button class="btn-secondary magnetic" onclick="scrollToSection('#contact'); addXP(5);">
+                            <span>LET'S TALK</span>
+                        </button>
+                    </div>
+                    <div class="hero-social">
+                        <a href="https://github.com/pavit12301611/" target="_blank" class="social-icon magnetic" aria-label="GitHub">
+                            <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+                        </a>
+                        <a href="https://www.instagram.com/pavitsingh1611" target="_blank" class="social-icon magnetic" aria-label="Instagram">
+                            <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+                        </a>
+                        <a href="mailto:pavitsingh1611@gmail.com" class="social-icon magnetic" aria-label="Email">
+                            <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+                        </a>
+                    </div>
+                </div>
+                <div class="hero-right">
+                    <div class="profile-card magnetic" id="profileCard">
+                        <div class="profile-card-glow"></div>
+                        <div class="profile-avatar">
+                            <div class="avatar-ring"></div>
+                            <div class="avatar-ring ring-2"></div>
+                            <div class="avatar-ring ring-3"></div>
+                            <span class="avatar-emoji">👨‍💻</span>
+                            <div class="avatar-status">🟢</div>
+                        </div>
+                        <h3 class="profile-name">Pavit Singh</h3>
+                        <p class="profile-role">Full-Stack Developer & Code Artist</p>
+                        <div class="speech-bubble" id="speechBubble">
+                            <span class="speech-text">"Currently turning caffeine into code..."</span>
+                        </div>
+                        <div class="profile-stats">
+                            <div class="p-stat" onclick="addXP(5);">
+                                <span class="stat-num counter" data-target="14">0</span>
+                                <span class="stat-label">Age</span>
+                            </div>
+                            <div class="p-stat" onclick="addXP(5);">
+                                <span class="stat-num counter" data-target="4">0</span>
+                                <span class="stat-label">Years</span>
+                            </div>
+                            <div class="p-stat" onclick="addXP(5);">
+                                <span class="stat-num counter" data-target="25">0</span>
+                                <span class="stat-label">Projects</span>
+                            </div>
+                            <div class="p-stat" onclick="addXP(5);">
+                                <span class="stat-num">∞</span>
+                                <span class="stat-label">Passion</span>
+                            </div>
+                        </div>
+                        <div class="profile-tags">
+                            <span class="p-tag">Python</span>
+                            <span class="p-tag">C++</span>
+                            <span class="p-tag">JavaScript</span>
+                            <span class="p-tag">AI/ML</span>
+                            <span class="p-tag">Web Dev</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="scroll-indicator">
+                <div class="scroll-mouse"><div class="scroll-wheel"></div></div>
+                <span>SCROLL TO EXPLORE</span>
+            </div>
+        </section>
+
+        <!-- MARQUEE -->
+        <section class="marquee-section">
+            <div class="marquee-track">
+                <div class="marquee-content">
+                    <span>PYTHON</span><span class="marquee-dot">◆</span>
+                    <span>JAVASCRIPT</span><span class="marquee-dot">◆</span>
+                    <span>C++</span><span class="marquee-dot">◆</span>
+                    <span>JAVA</span><span class="marquee-dot">◆</span>
+                    <span>THREE.JS</span><span class="marquee-dot">◆</span>
+                    <span>GSAP</span><span class="marquee-dot">◆</span>
+                    <span>HTML/CSS</span><span class="marquee-dot">◆</span>
+                    <span>AI/ML</span><span class="marquee-dot">◆</span>
+                    <span>REACT</span><span class="marquee-dot">◆</span>
+                    <span>NODE.JS</span><span class="marquee-dot">◆</span>
+                    <span>WEBGL</span><span class="marquee-dot">◆</span>
+                    <span>GIT</span><span class="marquee-dot">◆</span>
+                    <span>PYTHON</span><span class="marquee-dot">◆</span>
+                    <span>JAVASCRIPT</span><span class="marquee-dot">◆</span>
+                    <span>C++</span><span class="marquee-dot">◆</span>
+                    <span>JAVA</span><span class="marquee-dot">◆</span>
+                    <span>THREE.JS</span><span class="marquee-dot">◆</span>
+                    <span>GSAP</span><span class="marquee-dot">◆</span>
+                    <span>HTML/CSS</span><span class="marquee-dot">◆</span>
+                    <span>AI/ML</span><span class="marquee-dot">◆</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- MEGA STATS -->
+        <section class="mega-stats" id="megaStats">
+            <div class="container">
+                <div class="stats-grid">
+                    <div class="stat-card magnetic" onclick="incrementStat(this); addXP(3);">
+                        <span class="stat-emoji">☕</span>
+                        <span class="stat-number" data-count="2847">0</span>
+                        <span class="stat-desc">COFFEE CUPS</span>
+                    </div>
+                    <div class="stat-card magnetic" onclick="incrementStat(this); addXP(3);">
+                        <span class="stat-emoji">🐛</span>
+                        <span class="stat-number" data-count="10432">0</span>
+                        <span class="stat-desc">BUGS FIXED</span>
+                    </div>
+                    <div class="stat-card magnetic" onclick="incrementStat(this); addXP(3);">
+                        <span class="stat-emoji">💀</span>
+                        <span class="stat-number" data-count="10433">0</span>
+                        <span class="stat-desc">BUGS CREATED</span>
+                    </div>
+                    <div class="stat-card magnetic" onclick="incrementStat(this); addXP(3);">
+                        <span class="stat-emoji">⌨️</span>
+                        <span class="stat-number" data-count="7">0</span>
+                        <span class="stat-desc">KEYBOARDS RIP</span>
+                    </div>
+                    <div class="stat-card magnetic" onclick="incrementStat(this); addXP(3);">
+                        <span class="stat-emoji">📚</span>
+                        <span class="stat-number" data-count="9999">0</span>
+                        <span class="stat-desc">STACKOVERFLOW</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ABOUT -->
+        <section class="about" id="about">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-num">01</span>
+                    <div class="section-line"></div>
+                    <h2 class="section-title">ABOUT ME</h2>
+                    <p class="section-subtitle">The story behind the code warrior</p>
+                </div>
+                <div class="about-grid">
+                    <div class="about-left">
+                        <div class="about-text-block">
+                            <h3 class="gradient-text">🚀 The Origin Story</h3>
+                            <p>Started coding at age 10 when I accidentally opened Notepad and typed "Hello World" in HTML. That was my red pill moment. Since then, I've been deep in the matrix of programming.</p>
+                            <p>At 14, I don't see limitations — I see logic waiting to be optimized. Whether it's the raw power of <strong class="highlight">C++</strong> or the fluid nature of <strong class="highlight">JavaScript</strong>, I build because the future belongs to those who can script it.</p>
+                            <p>I don't just "make websites." I engineer experiences that bridge the gap between human imagination and machine execution.</p>
+                        </div>
+                        <div class="fun-facts">
+                            <div class="fun-fact magnetic" onclick="addXP(5);">
+                                <span class="ff-emoji">🎂</span>
+                                <div class="ff-content"><span class="ff-title">Young Legend</span><span class="ff-text">14 years old and already a code legend</span></div>
+                            </div>
+                            <div class="fun-fact magnetic" onclick="addXP(5);">
+                                <span class="ff-emoji">🇮🇳</span>
+                                <div class="ff-content"><span class="ff-title">Made in India</span><span class="ff-text">Based in India, coding for the world</span></div>
+                            </div>
+                            <div class="fun-fact magnetic" onclick="addXP(5);">
+                                <span class="ff-emoji">🌙</span>
+                                <div class="ff-content"><span class="ff-title">Night Owl</span><span class="ff-text">Best code is written at 3 AM with lo-fi</span></div>
+                            </div>
+                            <div class="fun-fact magnetic" onclick="addXP(5);">
+                                <span class="ff-emoji">🐛</span>
+                                <div class="ff-content"><span class="ff-title">Feature Creator</span><span class="ff-text">I don't create bugs, I create unplanned features</span></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="about-right">
+                        <div class="personality-section">
+                            <h4 class="mini-title">PERSONALITY METRICS</h4>
+                            <div class="personality-meters">
+                                <div class="meter-item"><div class="meter-header"><span>💻 Coding Addiction</span><span class="meter-val">99%</span></div><div class="meter-bar-outer"><div class="meter-bar-inner" data-width="99"></div></div></div>
+                                <div class="meter-item"><div class="meter-header"><span>☕ Coffee Dependency</span><span class="meter-val">95%</span></div><div class="meter-bar-outer"><div class="meter-bar-inner" data-width="95"></div></div></div>
+                                <div class="meter-item"><div class="meter-header"><span>😴 Sleep Schedule</span><span class="meter-val">12%</span></div><div class="meter-bar-outer"><div class="meter-bar-inner" data-width="12"></div></div></div>
+                                <div class="meter-item"><div class="meter-header"><span>🧠 Problem Solving</span><span class="meter-val">92%</span></div><div class="meter-bar-outer"><div class="meter-bar-inner" data-width="92"></div></div></div>
+                                <div class="meter-item"><div class="meter-header"><span>🎮 Gaming Skills</span><span class="meter-val">88%</span></div><div class="meter-bar-outer"><div class="meter-bar-inner" data-width="88"></div></div></div>
+                                <div class="meter-item"><div class="meter-header"><span>🤡 Humor Level</span><span class="meter-val">100%</span></div><div class="meter-bar-outer"><div class="meter-bar-inner" data-width="100"></div></div></div>
+                            </div>
+                        </div>
+                        <div class="currently-doing">
+                            <h4 class="mini-title"><span class="live-dot"></span> CURRENTLY</h4>
+                            <div class="cd-item">🎧 Listening to Lo-Fi while coding</div>
+                            <div class="cd-item">📖 Learning Rust & Machine Learning</div>
+                            <div class="cd-item">🔧 Building a secret AI project</div>
+                            <div class="cd-item">🎯 Training to be the youngest CTO</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- MANIFESTO -->
+        <section class="manifesto" id="manifesto">
+            <div class="container">
+                <div class="manifesto-content">
+                    <span class="section-num">02</span>
+                    <div class="section-line" style="margin:20px 0"></div>
+                    <h2 class="manifesto-quote">"Code is the only language where you can write a thought and watch it come to life."</h2>
+                    <div class="thoughts">
+                        <p>My philosophy is simple: Age is just a syntax error. I don't just "make websites." I engineer experiences that bridge the gap between human imagination and machine execution.</p>
+                        <p>Every line of code I write is a step toward building something that hasn't existed before. The future isn't predicted — it's <strong>programmed</strong>.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SKILLS -->
+        <section class="skills" id="skills">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-num">03</span>
+                    <div class="section-line"></div>
+                    <h2 class="section-title">ENGINEERING STACK</h2>
+                    <p class="section-subtitle">Technologies I wield like a coding samurai ⚔️</p>
+                </div>
+                <div class="skills-filter">
+                    <button class="filter-btn active" onclick="filterSkills('all', this)">All</button>
+                    <button class="filter-btn" onclick="filterSkills('lang', this)">Languages</button>
+                    <button class="filter-btn" onclick="filterSkills('web', this)">Web</button>
+                    <button class="filter-btn" onclick="filterSkills('tool', this)">Tools</button>
+                </div>
+                <div class="bento-grid" id="skillsGrid">
+                    <div class="bento-item magnetic" data-cat="lang" onclick="addXP(5);"><div class="bento-glow"></div><span class="skill-emoji">🐍</span><h3>Python</h3><p>Automation, AI & Backend Magic</p><div class="skill-bar-outer"><div class="skill-bar-inner" data-width="92"></div></div><span class="skill-level">EXPERT</span></div>
+                    <div class="bento-item magnetic" data-cat="lang" onclick="addXP(5);"><div class="bento-glow"></div><span class="skill-emoji">☕</span><h3>Java</h3><p>Enterprise-grade applications</p><div class="skill-bar-outer"><div class="skill-bar-inner" data-width="78"></div></div><span class="skill-level">ADVANCED</span></div>
+                    <div class="bento-item magnetic" data-cat="lang" onclick="addXP(5);"><div class="bento-glow"></div><span class="skill-emoji">⚡</span><h3>C / C++</h3><p>Low-level performance beast</p><div class="skill-bar-outer"><div class="skill-bar-inner" data-width="85"></div></div><span class="skill-level">ADVANCED</span></div>
+                    <div class="bento-item magnetic" data-cat="web" onclick="addXP(5);"><div class="bento-glow"></div><span class="skill-emoji">🌐</span><h3>HTML / CSS / JS</h3><p>The holy trinity of the web</p><div class="skill-bar-outer"><div class="skill-bar-inner" data-width="95"></div></div><span class="skill-level">MASTER</span></div>
+                    <div class="bento-item magnetic" data-cat="web" onclick="addXP(5);"><div class="bento-glow"></div><span class="skill-emoji">🎨</span><h3>Three.js / WebGL</h3><p>3D magic in the browser</p><div class="skill-bar-outer"><div class="skill-bar-inner" data-width="70"></div></div><span class="skill-level">INTERMEDIATE</span></div>
+                    <div class="bento-item magnetic" data-cat="web" onclick="addXP(5);"><div class="bento-glow"></div><span class="skill-emoji">🎭</span><h3>GSAP</h3><p>Buttery smooth animations</p><div class="skill-bar-outer"><div class="skill-bar-inner" data-width="88"></div></div><span class="skill-level">EXPERT</span></div>
+                    <div class="bento-item magnetic" data-cat="tool" onclick="addXP(5);"><div class="bento-glow"></div><span class="skill-emoji">🔧</span><h3>Git & GitHub</h3><p>Version control ninja</p><div class="skill-bar-outer"><div class="skill-bar-inner" data-width="82"></div></div><span class="skill-level">ADVANCED</span></div>
+                    <div class="bento-item magnetic" data-cat="tool" onclick="addXP(5);"><div class="bento-glow"></div><span class="skill-emoji">🧠</span><h3>AI / ML</h3><p>Teaching machines to think</p><div class="skill-bar-outer"><div class="skill-bar-inner" data-width="60"></div></div><span class="skill-level">LEARNING</span></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PROJECTS -->
+        <section class="projects" id="projects">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-num">04</span>
+                    <div class="section-line"></div>
+                    <h2 class="section-title">FEATURED PROJECTS</h2>
+                    <p class="section-subtitle">Real projects you can click, explore, and use 🛠️</p>
+                </div>
+                <div class="project-grid">
+                    <!-- Working Project 1: Live Calculator -->
+                    <div class="project-card magnetic" onclick="addXP(10);">
+                        <div class="project-preview"><span>🧮</span><div class="project-overlay">LIVE DEMO BELOW ↓</div></div>
+                        <div class="project-info">
+                            <span class="project-tag">LIVE TOOL</span>
+                            <h3>Smart Calculator</h3>
+                            <p>Fully functional calculator built with vanilla JS. Try it below!</p>
+                            <div class="project-tech"><span>JavaScript</span><span>CSS Grid</span><span>Logic</span></div>
+                        </div>
+                        <div class="project-live-demo">
+                            <div class="calc-display" id="calcDisplay">0</div>
+                            <div class="calc-grid">
+                                <button class="calc-btn calc-op" onclick="calcInput('C')">C</button>
+                                <button class="calc-btn calc-op" onclick="calcInput('±')">±</button>
+                                <button class="calc-btn calc-op" onclick="calcInput('%')">%</button>
+                                <button class="calc-btn calc-accent" onclick="calcInput('/')">÷</button>
+                                <button class="calc-btn" onclick="calcInput('7')">7</button>
+                                <button class="calc-btn" onclick="calcInput('8')">8</button>
+                                <button class="calc-btn" onclick="calcInput('9')">9</button>
+                                <button class="calc-btn calc-accent" onclick="calcInput('*')">×</button>
+                                <button class="calc-btn" onclick="calcInput('4')">4</button>
+                                <button class="calc-btn" onclick="calcInput('5')">5</button>
+                                <button class="calc-btn" onclick="calcInput('6')">6</button>
+                                <button class="calc-btn calc-accent" onclick="calcInput('-')">−</button>
+                                <button class="calc-btn" onclick="calcInput('1')">1</button>
+                                <button class="calc-btn" onclick="calcInput('2')">2</button>
+                                <button class="calc-btn" onclick="calcInput('3')">3</button>
+                                <button class="calc-btn calc-accent" onclick="calcInput('+')">+</button>
+                                <button class="calc-btn calc-zero" onclick="calcInput('0')">0</button>
+                                <button class="calc-btn" onclick="calcInput('.')">.</button>
+                                <button class="calc-btn calc-accent" onclick="calcInput('=')">=</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Working Project 2: Color Generator -->
+                    <div class="project-card magnetic" onclick="addXP(10);">
+                        <div class="project-preview"><span>🎨</span><div class="project-overlay">GENERATE COLORS ↓</div></div>
+                        <div class="project-info">
+                            <span class="project-tag">LIVE TOOL</span>
+                            <h3>Color Palette Generator</h3>
+                            <p>Click to generate beautiful color palettes. Click any color to copy HEX.</p>
+                            <div class="project-tech"><span>JavaScript</span><span>CSS</span><span>Clipboard API</span></div>
+                        </div>
+                        <div class="project-live-demo">
+                            <div class="color-palette" id="colorPalette"></div>
+                            <button class="fun-btn" onclick="generatePalette()" style="margin-top:12px;width:100%;">🎨 Generate New Palette</button>
+                            <div class="fun-output" id="colorCopied"></div>
+                        </div>
+                    </div>
+
+                    <!-- Working Project 3: Stopwatch -->
+                    <div class="project-card magnetic" onclick="addXP(10);">
+                        <div class="project-preview"><span>⏱️</span><div class="project-overlay">TRY IT ↓</div></div>
+                        <div class="project-info">
+                            <span class="project-tag">LIVE TOOL</span>
+                            <h3>Precision Stopwatch</h3>
+                            <p>Accurate stopwatch with lap tracking. Built with pure JavaScript.</p>
+                            <div class="project-tech"><span>JavaScript</span><span>setInterval</span><span>DOM</span></div>
+                        </div>
+                        <div class="project-live-demo">
+                            <div class="stopwatch-display" id="stopwatchDisplay">00:00:00</div>
+                            <div class="stopwatch-btns">
+                                <button class="fun-btn" id="swStartBtn" onclick="toggleStopwatch()">▶ Start</button>
+                                <button class="fun-btn" onclick="lapStopwatch()">🏁 Lap</button>
+                                <button class="fun-btn" onclick="resetStopwatch()">↺ Reset</button>
+                            </div>
+                            <div class="stopwatch-laps" id="swLaps"></div>
+                        </div>
+                    </div>
+
+                    <!-- Working Project 4: Password Generator -->
+                    <div class="project-card magnetic" onclick="addXP(10);">
+                        <div class="project-preview"><span>🔐</span><div class="project-overlay">GENERATE ↓</div></div>
+                        <div class="project-info">
+                            <span class="project-tag">LIVE TOOL</span>
+                            <h3>Password Generator</h3>
+                            <p>Secure password generator with custom length and complexity options.</p>
+                            <div class="project-tech"><span>JavaScript</span><span>Crypto</span><span>Security</span></div>
+                        </div>
+                        <div class="project-live-demo">
+                            <div class="password-output" id="passwordOutput">Click Generate!</div>
+                            <div class="password-controls">
+                                <label>Length: <input type="range" id="pwdLength" min="8" max="32" value="16" oninput="this.nextElementSibling.textContent=this.value"><span>16</span></label>
+                                <label><input type="checkbox" id="pwdSymbols" checked> Symbols</label>
+                                <label><input type="checkbox" id="pwdNumbers" checked> Numbers</label>
+                            </div>
+                            <button class="fun-btn" onclick="generatePassword()" style="width:100%;margin-top:10px;">🔐 Generate Password</button>
+                            <button class="fun-btn" onclick="copyPassword()" style="width:100%;margin-top:6px;">📋 Copy</button>
+                        </div>
+                    </div>
+
+                    <!-- Working Project 5: Markdown Previewer -->
+                    <div class="project-card magnetic" onclick="addXP(10);">
+                        <div class="project-preview"><span>📝</span><div class="project-overlay">WRITE MARKDOWN ↓</div></div>
+                        <div class="project-info">
+                            <span class="project-tag">LIVE TOOL</span>
+                            <h3>Markdown Previewer</h3>
+                            <p>Write markdown on the left, see live HTML preview on the right.</p>
+                            <div class="project-tech"><span>JavaScript</span><span>RegEx</span><span>HTML</span></div>
+                        </div>
+                        <div class="project-live-demo">
+                            <textarea class="md-input" id="mdInput" placeholder="# Hello World&#10;**Bold** and *italic*&#10;- List item&#10;`code`" oninput="renderMarkdown()"></textarea>
+                            <div class="md-preview" id="mdPreview"><p style="color:var(--text-dim)">Preview appears here...</p></div>
+                        </div>
+                    </div>
+
+                    <!-- Working Project 6: Pixel Art Canvas -->
+                    <div class="project-card magnetic" onclick="addXP(10);">
+                        <div class="project-preview"><span>🎮</span><div class="project-overlay">DRAW PIXELS ↓</div></div>
+                        <div class="project-info">
+                            <span class="project-tag">LIVE GAME</span>
+                            <h3>Pixel Art Canvas</h3>
+                            <p>Click to paint pixels! Choose colors and create pixel art masterpieces.</p>
+                            <div class="project-tech"><span>JavaScript</span><span>CSS Grid</span><span>Events</span></div>
+                        </div>
+                        <div class="project-live-demo">
+                            <div class="pixel-controls">
+                                <input type="color" id="pixelColor" value="#e94560" class="pixel-color-input">
+                                <button class="fun-btn" onclick="clearPixelCanvas()">🗑️ Clear</button>
+                                <button class="fun-btn" onclick="randomPixelArt()">🎲 Random</button>
+                            </div>
+                            <div class="pixel-canvas" id="pixelCanvas"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- STORE -->
+        <section class="store" id="store">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-num">05</span>
+                    <div class="section-line"></div>
+                    <h2 class="section-title">THE CODE VAULT</h2>
+                    <p class="section-subtitle">Premium source code and digital assets 🔒</p>
+                </div>
+                <div class="product-row">
+                    <div class="product magnetic" onclick="addXP(15);">
+                        <div class="product-glow"></div>
+                        <div class="p-header"><span class="p-num">01</span><div><h4>Neural-Flow UI Kit</h4><p class="p-sub">3D framework for portfolios</p></div></div>
+                        <p class="p-desc">High-performance 3D framework with GSAP animations, particle systems, and glassmorphism. Everything you see on this site.</p>
+                        <div class="p-features"><span>✓ Three.js</span><span>✓ GSAP</span><span>✓ Responsive</span><span>✓ Docs</span></div>
+                        <a href="#" class="btn-buy"><span>PURCHASE</span><span class="btn-price">$49</span></a>
+                    </div>
+                    <div class="product magnetic" onclick="addXP(15);">
+                        <div class="product-glow"></div>
+                        <div class="p-header"><span class="p-num">02</span><div><h4>Python Automation Core</h4><p class="p-sub">Enterprise automation toolkit</p></div></div>
+                        <p class="p-desc">50+ modular scripts for web scraping, data processing, automated reporting, and API integrations.</p>
+                        <div class="p-features"><span>✓ 50+ Scripts</span><span>✓ APIs</span><span>✓ Dashboard</span><span>✓ Support</span></div>
+                        <a href="#" class="btn-buy"><span>PURCHASE</span><span class="btn-price">$89</span></a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FUN ZONE -->
+        <section class="funzone" id="funzone">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-num">06</span>
+                    <div class="section-line"></div>
+                    <h2 class="section-title">FUN ZONE 🎮</h2>
+                    <p class="section-subtitle">Because coding without fun is just... typing.</p>
+                </div>
+                <div class="fun-grid">
+                    <div class="fun-card magnetic"><span class="fun-emoji">🎯</span><h3>Impossible Button</h3><p>Try to click it!</p><button class="impossible-btn" id="impossibleBtn" onmouseover="moveImpossibleBtn()" onclick="caughtImpossibleBtn()">CLICK ME!</button><div class="fun-output" id="impossibleOutput"></div></div>
+                    <div class="fun-card magnetic"><span class="fun-emoji">🌡️</span><h3>Vibe Check</h3><p>Analyze your vibe.</p><button class="fun-btn" onclick="vibeCheck()">CHECK VIBE</button><div class="fun-output" id="vibeOutput"></div></div>
+                    <div class="fun-card magnetic"><span class="fun-emoji">🛡️</span><h3>Excuse Generator</h3><p>For late code.</p><button class="fun-btn" onclick="generateExcuse()">GENERATE</button><div class="fun-output" id="excuseOutput"></div></div>
+                    <div class="fun-card magnetic"><span class="fun-emoji">🎰</span><h3>Compliment Me</h3><p>Ego boost!</p><button class="fun-btn" onclick="randomCompliment()">COMPLIMENT</button><div class="fun-output" id="complimentOutput"></div></div>
+                    <div class="fun-card magnetic"><span class="fun-emoji">🎲</span><h3>Would You Rather</h3><p>Dev dilemmas!</p><button class="fun-btn" onclick="wouldYouRather()">PLAY</button><div class="fun-output" id="wyrOutput"></div></div>
+                    <div class="fun-card magnetic"><span class="fun-emoji">🔮</span><h3>Code Fortune</h3><p>Your code future.</p><button class="fun-btn" onclick="codeFortune()">REVEAL</button><div class="fun-output" id="fortuneOutput"></div></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TESTIMONIALS -->
+        <section class="testimonials" id="testimonials">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-num">07</span>
+                    <div class="section-line"></div>
+                    <h2 class="section-title">TESTIMONIALS</h2>
+                    <p class="section-subtitle">What people (and machines) say 😂</p>
+                </div>
+                <div class="testimonial-grid">
+                    <div class="testimonial-card magnetic" onclick="addXP(5);"><span class="tc-emoji">👩</span><div class="tc-stars">⭐⭐⭐⭐⭐</div><p class="tc-quote">"Beta, coding band karo aur khaana kha lo. Par website acchi hai."</p><div class="tc-footer"><span class="tc-author">MOM</span><span class="tc-role">Chief Food Officer</span></div></div>
+                    <div class="testimonial-card magnetic" onclick="addXP(5);"><span class="tc-emoji">☕</span><div class="tc-stars">⭐⭐⭐⭐⭐</div><p class="tc-quote">"He drinks me more than water. Job security!"</p><div class="tc-footer"><span class="tc-author">COFFEE MACHINE</span><span class="tc-role">Fuel Provider</span></div></div>
+                    <div class="testimonial-card magnetic" onclick="addXP(5);"><span class="tc-emoji">🐛</span><div class="tc-stars">⭐</div><p class="tc-quote">"Please stop. We have families. Every VS Code launch costs us a battalion."</p><div class="tc-footer"><span class="tc-author">THE BUGS</span><span class="tc-role">Endangered Species</span></div></div>
+                    <div class="testimonial-card magnetic" onclick="addXP(5);"><span class="tc-emoji">📚</span><div class="tc-stars">⭐⭐⭐⭐</div><p class="tc-quote">"This kid visits me 200 times a day. Even I learn from him now."</p><div class="tc-footer"><span class="tc-author">STACK OVERFLOW</span><span class="tc-role">Knowledge Base</span></div></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CONTACT -->
+        <footer class="contact" id="contact">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-num">08</span>
+                    <div class="section-line"></div>
+                    <h2 class="section-title contact-title">LET'S BUILD<br>SOMETHING EPIC</h2>
+                </div>
+                <div class="contact-grid">
+                    <div class="contact-card magnetic"><span>📧</span><h4>Email</h4><a href="mailto:pavitsingh1611@gmail.com">pavitsingh1611@gmail.com</a></div>
+                    <div class="contact-card magnetic"><span>📸</span><h4>Instagram</h4><a href="https://www.instagram.com/pavitsingh1611" target="_blank">@pavitsingh1611</a></div>
+                    <div class="contact-card magnetic"><span>💻</span><h4>GitHub</h4><a href="https://github.com/pavit12301611/" target="_blank">pavit12301611</a></div>
+                    <div class="contact-card magnetic"><span>💬</span><h4>WhatsApp</h4><a href="https://wa.me/919528923866" target="_blank">Message Me</a></div>
+                </div>
+                <a href="mailto:pavitsingh1611@gmail.com" class="big-mail magnetic">pavitsingh1611@gmail.com</a>
+                <div class="footer-bottom">
+                    <p>© 2026 Pavit Singh. Built with 💚 and ☕</p>
+                    <p class="tagline">"A developer so good, even bugs fear him! 🐛💀"</p>
+                </div>
+            </div>
+        </footer>
+    </main>
+
+    <!-- CHATBOT -->
+    <button class="chatbot-toggle" id="chatToggle" onclick="toggleChat()">
+        <span class="chat-icon">🤖</span>
+        <span class="chat-notification" id="chatNotif">1</span>
+    </button>
+    <div class="chatbot-window" id="chatWindow">
+        <div class="chat-header">
+            <div class="ch-left"><div class="ch-avatar">🤖</div><div class="ch-info"><h4>Pavit Singh Bot</h4><p><span class="live-dot-sm"></span> Always Online</p></div></div>
+            <button class="chat-close" onclick="toggleChat()">✕</button>
+        </div>
+        <div class="chat-messages" id="chatMessages">
+            <div class="chat-msg bot"><div class="msg-avatar">🤖</div><div class="msg-content">Hey! I'm Pavit's sarcastic AI. Ask me anything... I dare you. 😏</div></div>
+        </div>
+        <div class="chat-input-area">
+            <input type="text" id="chatInput" placeholder="Type something clever..." onkeypress="if(event.key==='Enter')sendChat()">
+            <button class="chat-send-btn" onclick="sendChat()">🚀</button>
+        </div>
+    </div>
+
+    <!-- FLOAT BUTTONS -->
+    <a href="https://wa.me/919528923866" target="_blank" class="whatsapp-float">💬</a>
+    <button class="back-to-top" id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+    <!-- SNAKE -->
+    <div class="game-modal" id="snakeModal">
+        <div class="game-modal-content">
+            <button class="game-close" onclick="closeSnakeGame()">✕ ESC</button>
+            <h3 class="game-title">🐍 SNAKE</h3>
+            <div class="game-score" id="snakeScore">SCORE: 0</div>
+            <canvas id="snakeCanvas" width="400" height="400"></canvas>
+            <p class="game-hint">Arrow Keys to move</p>
+        </div>
+    </div>
+
+    <!-- KONAMI -->
+    <div class="konami-reward" id="konamiReward">
+        <div class="konami-content">
+            <span class="konami-emoji">🎊</span>
+            <h2>LEGENDARY STATUS<br>UNLOCKED!</h2>
+            <p>You found the Konami Code! ↑↑↓↓←→←→BA</p>
+            <button class="btn-primary" onclick="closeKonami()">CLAIM +500 XP</button>
+        </div>
+    </div>
+
+    <!-- SCRIPTS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script src="gl.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
